@@ -26,6 +26,7 @@
 #include "Sound.h"
 #include "SoundEffect.h"
 #include <random>
+#include "FrameTimer.h"
 
 
 class Game
@@ -147,6 +148,7 @@ private:
     Sound gameOver;
     Sound mainTheme;
     SoundEffect paddleHit;
+    FrameTimer ft;
 
 
     
