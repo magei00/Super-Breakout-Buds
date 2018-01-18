@@ -28,6 +28,9 @@
 #include <random>
 #include "FrameTimer.h"
 #include "Brick.h"
+#include "Ball.h"
+#include "Paddle.h"
+#include "Vec2.h"
 
 
 class Game
@@ -46,16 +49,13 @@ private:
     void DrawPlayer2(int x, int y);
     void DrawBall(int x, int y);
     void DrawBall2(int x, int y);
-    void DrawBrickRed(int x, int y);
-    void DrawBrickBlue(int x, int y);
-    void DrawBrickGrey(int x, int y);
     void DrawStartScreen(int x, int y);
     void DrawWinScreen(int x, int y);
     void Ball_collision_check();
     void Player_collision_check();
     void BuildLevel1();
     void BuildLevel2();
-    void Brick_collision_check();
+    
         
 	/********************************/
 private:
@@ -69,28 +69,13 @@ private:
     std::random_device rd;
     std::mt19937 rng;
 
-    int fps = 60;
 
-    int x_player1 = 10;
-    int y_player1 = 200;
-    int x_player2 = 758;
-    int y_player2 = 200;
-    int width_player = 24;
-    int height_player = 160;
-    int y_ball2 = 200;
-    int x_ball2 = 600;
-    int xvel_ball2 = 3 * (120 / fps);
-    int yvel_ball2 = 3 * (120 / fps);
+    Vec2 startPosPlayer1 = Vec2(10,200);
+    Vec2 startPosPlayer2 = Vec2(758, 200);
+   
+    
 
-
-    int y_ball    = 200;
-    int x_ball    = 50;
-    int xvel_ball = -3 * (120 / fps);
-    int yvel_ball = 3 * (120 / fps);
-    int width_ball = 24;
-    int height_ball = 24;
-    bool alive_ball = true;
-    bool alive_ball2 = true;
+    
     bool level1_built = false;
     bool level2_built = false;
     bool level1_clear = false;
@@ -106,7 +91,7 @@ private:
     bool doOnce1 = true;
     bool doOnce2 = true;
 
-    Brick bricks[12][9];
+    //Brick bricks[12][9];
 
     SoundEffect wallHit;
     SoundEffect brickHit;
@@ -115,6 +100,7 @@ private:
     Sound mainTheme;
     SoundEffect paddleHit;
     FrameTimer ft;
+    Ball ball1;
 
 
     

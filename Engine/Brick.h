@@ -1,6 +1,8 @@
 #pragma once
 #include "Vec2.h"
 #include "Rekt.h"
+#include "Graphics.h"
+#include "Ball.h"
 
 class Brick
 {
@@ -14,6 +16,8 @@ public:
     void Destroy();
     bool IsAlive();
     Rekt GetRekt() const;
+    bool IsCollidingWithBall(Ball ball);
+    void Draw(Graphics& gfx);
 
 private:
     Vec2 pos;

@@ -13,7 +13,7 @@ Rekt::Rekt(Vec2 pos, float width, float height)
     Rekt(pos.y, pos.y+height, pos.x, pos.x+width);
 }
 
-bool Rekt::IsOverlappingWith(const Rekt other)
+bool Rekt::IsOverlappingWith(const Rekt other) const
 {
     if (top <= other.bottom &&
         bottom >= other.top &&
