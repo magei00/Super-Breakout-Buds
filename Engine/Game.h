@@ -27,6 +27,7 @@
 #include "SoundEffect.h"
 #include <random>
 #include "FrameTimer.h"
+#include "Brick.h"
 
 
 class Game
@@ -63,42 +64,7 @@ private:
 	/********************************/
 	/*  User Variables              */
 
-    class Brick
-    {
-    private:
-        int x;
-        int y;
-        char type;
-        bool is_alive=true;
-    public:
-        void Create(int x1, int y1, char type1)
-        {
-            x = x1;
-            y = y1;
-            type = type1;
-            is_alive = true;
-        }
-        char GetType() {
-            return type;
-        }
-        int GetX() {
-            return x;
-        }
-        int GetY() {
-            return y;
-        }
-        void SetType(char c){
-            type = c;
-        }
-        void Destroy() {
-            is_alive = false;
-        }
-        bool IsAlive() {
-
-            return is_alive;
-        }
-
-    };
+    
 
     std::random_device rd;
     std::mt19937 rng;
