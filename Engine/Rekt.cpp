@@ -8,6 +8,11 @@ Rekt::Rekt(float top_in, float bottom_in, float left_in, float right_in)
     right = right_in;
 }
 
+Rekt::Rekt(Vec2 pos, float width, float height)
+{
+    Rekt(pos.y, pos.y+height, pos.x, pos.x+width);
+}
+
 bool Rekt::IsOverlappingWith(const Rekt other)
 {
     if (top <= other.bottom &&
