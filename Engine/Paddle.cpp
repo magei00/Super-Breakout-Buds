@@ -4,6 +4,12 @@ Paddle::Paddle(Vec2 pos_in, int ctrlScheme_in)
 {
     pos = pos_in;
     ctrlScheme = ctrlScheme_in;
+
+    for (int i = 0; i < nBounceAngles; i++)
+    {
+        bounceAngles[i] = Vec2(1.0f, 0.0f).RotateDeg(maxBounceAngle - i*totalBounceRange / (nBounceAngles-1));
+    }
+
 }
 
 void Paddle::Update(Keyboard & kbd, float dt)
@@ -44,8 +50,34 @@ bool Paddle::IsCollidingWith(Ball& ball)
 {
     Rekt ballBox(ball.GetPos(), ball.GetWidth(), ball.GetHeight());
     Rekt paddleBox(pos, width, height);
+    
+    if (paddleBox.IsOverlappingWith(ballBox))
+    {
+        BounceBall(ball);
 
-    return paddleBox.IsOverlappingWith(ballBox);
+        return true;
+    }
+    return false;
+}
+
+void Paddle::BounceBall(Ball & ball)
+{
+    float ballMiddleY = ball.GetPos().y + ball.GetHeight()/2.0f;
+    float pButtom = pos.y + height;
+
+    for (int i = 0; i < nBounceAngles; i++)
+    {
+        if (ballMiddleY >= pButtom - (i+1)*height / nBounceAngles) {
+            
+            ball.SetVel(bounceAngles[i]);
+            if (ctrlScheme == 2)
+            {
+                ball.BounceX();
+            }
+
+            return;
+        }
+    }
 }
 
 void Paddle::Draw(Graphics & gfx)

@@ -32,14 +32,13 @@ Game::Game( MainWindow& wnd )
     gameOver(L"game_over.wav"),
     mainTheme(L"main_theme.wav",0.0f,119.0f),
     paddleHit({ L"paddle_hit.wav" }),
-    ball1(Vec2(50.0f,50.0f), Vec2(60.0f, -60.0f)*5,'r'),
+    ball1(Vec2(50.0f,50.0f), Vec2(1.0f, 0.0f),'r'),
     paddle1(startPosPlayer1,1),
     paddle2(startPosPlayer2, 2)
 {
 
-    Rekt rekt1(5, 50, 5, 10);
-    Rekt rekt2(11, 12, 11, 12);
-    bool hmm = rekt1.IsOverlappingWith(rekt2);
+    Vec2 test(5.0f, 0.0f);
+    Vec2 test2 = test.RotateDeg(90.0f);
 
 }
 
@@ -10939,12 +10938,10 @@ void Game::UpdateModel()
     paddle1.Update(wnd.kbd,dt);
     paddle2.Update(wnd.kbd,dt);
 
-    if (paddle1.IsCollidingWith(ball1)) {
-        ball1.BounceX();
-    }
-    if (paddle2.IsCollidingWith(ball1)) {
-        ball1.BounceX();
-    }
+    paddle1.IsCollidingWith(ball1);
+
+    paddle2.IsCollidingWith(ball1);
+
 }
 
 void Game::ComposeFrame()

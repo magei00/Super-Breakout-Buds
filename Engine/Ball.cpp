@@ -10,7 +10,9 @@ Ball::Ball(Vec2 pos_in, Vec2 vel_in, char type_in)
 void Ball::Update(float dt)
 {
     //move
-    pos += vel*dt;
+    //vel = vel.Normalize();
+
+    pos += vel*speed*dt;
 
     //collision with top and bottom of level
     if (pos.y < 0)
@@ -55,6 +57,11 @@ float Ball::GetWidth()
 float Ball::GetHeight()
 {
     return height;
+}
+
+void Ball::SetVel(Vec2 vel_in)
+{
+    vel = vel_in;
 }
 
 bool Ball::IsAlive()
