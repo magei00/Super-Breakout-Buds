@@ -31,6 +31,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "Vec2.h"
+#include "Rekt.h"
 
 
 class Game
@@ -73,7 +74,9 @@ private:
     Vec2 startPosPlayer1 = Vec2(10,200);
     Vec2 startPosPlayer2 = Vec2(758, 200);
    
-    
+    Ball ball1;
+    Paddle paddle1;
+    Paddle paddle2;
 
     
     bool level1_built = false;
@@ -100,7 +103,7 @@ private:
     Sound mainTheme;
     SoundEffect paddleHit;
     FrameTimer ft;
-    Ball ball1;
+    
 
 
     

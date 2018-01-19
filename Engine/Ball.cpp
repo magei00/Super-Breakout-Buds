@@ -7,10 +7,10 @@ Ball::Ball(Vec2 pos_in, Vec2 vel_in, char type_in)
     type = type_in;
 }
 
-void Ball::Update()
+void Ball::Update(float dt)
 {
     //move
-    pos += vel;
+    pos += vel*dt;
 
     //collision with top and bottom of level
     if (pos.y < 0)
@@ -26,6 +26,7 @@ void Ball::Update()
     if (pos.x >= 800-width || pos.x < 0)//check if past paddles and outside level
     {
         //isAlive = false;
+        pos.x = 0;
         BounceX();
     }
 

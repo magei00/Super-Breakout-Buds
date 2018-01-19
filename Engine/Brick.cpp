@@ -38,8 +38,8 @@ Rekt Brick::GetRekt() const
 
 bool Brick::IsCollidingWithBall(Ball ball)
 {
-    const Rekt ballBox = Rekt(ball.GetPos(), ball.GetWidth(), ball.GetHeight());
-    const Rekt brickBox = Rekt(pos, width, height);
+    const Rekt ballBox(ball.GetPos(), ball.GetWidth(), ball.GetHeight());
+    const Rekt brickBox(pos, width, height);
 
     return brickBox.IsOverlappingWith(ballBox);
 }

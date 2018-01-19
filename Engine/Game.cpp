@@ -30,10 +30,17 @@ Game::Game( MainWindow& wnd )
     brickHit({ L"brick_hit1.wav" }),
     gameStart(L"game_start.wav"),
     gameOver(L"game_over.wav"),
-    mainTheme(L"main_theme.wav",0.0f,120.0f),
+    mainTheme(L"main_theme.wav",0.0f,119.0f),
     paddleHit({ L"paddle_hit.wav" }),
-    ball1(Vec2(50.0f,50.0f), Vec2(1.0f, -1.0f)*5,'r')
+    ball1(Vec2(50.0f,50.0f), Vec2(60.0f, -60.0f)*5,'r'),
+    paddle1(startPosPlayer1,1),
+    paddle2(startPosPlayer2, 2)
 {
+
+    Rekt rekt1(5, 50, 5, 10);
+    Rekt rekt2(11, 12, 11, 12);
+    bool hmm = rekt1.IsOverlappingWith(rekt2);
+
 }
 
 void Game::Go()
@@ -43,11 +50,6 @@ void Game::Go()
 	ComposeFrame();
 	gfx.EndFrame();
 }
-
-
-
-
-
 
 
 void Game::DrawStartScreen(int x, int y) {
@@ -10926,19 +10928,32 @@ void Game::Brick_collision_check() {
 
 void Game::UpdateModel()
 {
+    float dt = ft.Mark();
+
     if (!mainMusicPlaying) {
         mainTheme.Play();
         mainMusicPlaying = true;
     }
     
-    ball1.Update();
+    ball1.Update(dt);
+    paddle1.Update(wnd.kbd,dt);
+    paddle2.Update(wnd.kbd,dt);
 
-    
+    if (paddle1.IsCollidingWith(ball1)) {
+        ball1.BounceX();
+    }
+    if (paddle2.IsCollidingWith(ball1)) {
+        ball1.BounceX();
+    }
 }
 
 void Game::ComposeFrame()
 {
  
+    paddle1.Draw(gfx);
+    paddle2.Draw(gfx);
+
+
     if (ball1.IsAlive()) {
         ball1.Draw(gfx);
     }

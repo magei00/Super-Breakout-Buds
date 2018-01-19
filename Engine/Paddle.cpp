@@ -6,15 +6,15 @@ Paddle::Paddle(Vec2 pos_in, int ctrlScheme_in)
     ctrlScheme = ctrlScheme_in;
 }
 
-void Paddle::Update(Keyboard & kbd)
+void Paddle::Update(Keyboard & kbd, float dt)
 {
     if (ctrlScheme == 1)
     {
         if (kbd.KeyIsPressed('W')) {
-            pos.y-=speed;
+            pos.y-=speed*dt;
         }
         if (kbd.KeyIsPressed('S')) {
-            pos.y += speed;
+            pos.y += speed*dt;
         }
         
 
@@ -22,10 +22,10 @@ void Paddle::Update(Keyboard & kbd)
     else if (ctrlScheme == 2)
     {
         if (kbd.KeyIsPressed(VK_UP)) {
-            pos.y -= speed;
+            pos.y -= speed*dt;
         }
         if (kbd.KeyIsPressed(VK_DOWN)) {
-            pos.y += speed;
+            pos.y += speed*dt;
         }
     }
 
@@ -40,10 +40,10 @@ void Paddle::Update(Keyboard & kbd)
     }
 }
 
-bool Paddle::IsCollidingWith(Ball ball)
+bool Paddle::IsCollidingWith(Ball& ball)
 {
-    const Rekt ballBox = Rekt(ball.GetPos(), ball.GetWidth(), ball.GetHeight());
-    const Rekt paddleBox = Rekt(pos, width, height);
+    Rekt ballBox(ball.GetPos(), ball.GetWidth(), ball.GetHeight());
+    Rekt paddleBox(pos, width, height);
 
     return paddleBox.IsOverlappingWith(ballBox);
 }

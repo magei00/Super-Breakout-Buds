@@ -6,7 +6,7 @@ class Ball
 {
 public:
     Ball(Vec2 pos_in, Vec2 vel_in, char type_in);
-    void Update();
+    void Update(float dt);
     void BounceX();
     void BounceY();
     Vec2 GetPos();
