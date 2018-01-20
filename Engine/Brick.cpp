@@ -1,10 +1,18 @@
 #include "Brick.h"
 
 Brick::Brick(Vec2 pos_in, char type_in)
+    :
+    pos(pos_in),
+    type(type_in),
+    is_alive(true)
+{
+   
+}
+
+void Brick::Init(Vec2 pos_in, char type_in)
 {
     pos = pos_in;
     type = type_in;
-    is_alive = true;
 }
 
 char Brick::GetType() const
@@ -26,6 +34,10 @@ void Brick::Destroy()
 {
     is_alive = false;
 }
+void Brick::Revive()
+{
+    is_alive = true;
+}
 bool Brick::IsAlive()
 {
     return is_alive;
@@ -34,6 +46,16 @@ bool Brick::IsAlive()
 Rekt Brick::GetRekt() const
 {
     return Rekt(pos,width,height);
+}
+
+float Brick::GetWidth()
+{
+    return width;
+}
+
+float Brick::GetHeight()
+{
+    return height;
 }
 
 bool Brick::IsCollidingWithBall(Ball ball)

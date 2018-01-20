@@ -32,6 +32,7 @@
 #include "Paddle.h"
 #include "Vec2.h"
 #include "Rekt.h"
+#include "LevelController.h"
 
 
 class Game
@@ -77,6 +78,7 @@ private:
     Ball ball1;
     Paddle paddle1;
     Paddle paddle2;
+    LevelController lvlCtrl;
 
     
     bool level1_built = false;

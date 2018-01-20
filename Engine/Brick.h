@@ -8,14 +8,19 @@ class Brick
 {
 
 public:
+    Brick() = default;
     Brick(Vec2 pos_in, char type_in);
+    void Init(Vec2 pos_in, char type_in);
     
     char GetType() const;
     Vec2 GetPos() const;
     void SetType(char c);
     void Destroy();
+    void Revive();
     bool IsAlive();
     Rekt GetRekt() const;
+    static float GetWidth();
+    static float GetHeight();
     bool IsCollidingWithBall(Ball ball);
     void Draw(Graphics& gfx);
 

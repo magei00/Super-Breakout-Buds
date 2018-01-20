@@ -44,9 +44,34 @@ void Ball::BounceY()
     vel.y *= -1;
 }
 
+void Ball::BounceUp()
+{
+    vel.y = std::abs(vel.y)*-1;
+}
+
+void Ball::BounceDown()
+{
+    vel.y = std::abs(vel.y);
+}
+
+void Ball::BounceLeft()
+{
+    vel.x = std::abs(vel.x)*-1;
+}
+
+void Ball::BounceRight()
+{
+    vel.x = std::abs(vel.x);
+}
+
 Vec2 Ball::GetPos()
 {
     return pos;
+}
+
+Rekt Ball::GetRekt()
+{
+    return Rekt(pos,width,height);
 }
 
 float Ball::GetWidth()

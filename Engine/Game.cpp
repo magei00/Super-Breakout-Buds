@@ -21,20 +21,22 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
-	:
-	wnd( wnd ),
-	gfx( wnd ),
+Game::Game(MainWindow& wnd)
+    :
+    wnd(wnd),
+    gfx(wnd),
     rng(rd()),
     wallHit({ L"wall_hit.wav" }),
     brickHit({ L"brick_hit1.wav" }),
     gameStart(L"game_start.wav"),
     gameOver(L"game_over.wav"),
-    mainTheme(L"main_theme.wav",0.0f,119.0f),
+    mainTheme(L"main_theme.wav", 0.0f, 119.0f),
     paddleHit({ L"paddle_hit.wav" }),
-    ball1(Vec2(50.0f,50.0f), Vec2(1.0f, 0.0f),'r'),
-    paddle1(startPosPlayer1,1),
-    paddle2(startPosPlayer2, 2)
+    ball1(Vec2(50.0f, 50.0f), Vec2(1.0f, 1.0f), 'r'),
+    paddle1(startPosPlayer1, 1),
+    paddle2(startPosPlayer2, 2),
+    lvlCtrl()
+
 {
 
     Vec2 test(5.0f, 0.0f);
@@ -10702,27 +10704,7 @@ void Game::DrawWinScreen(int x, int y) {
 /*
 
 void Game::BuildLevel1() {
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 9; j++) {
-            bricks[i][j].Create(240 + 32 * i, 12 + 64 * j, 'g');
-        }
-        
-    }
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 9; j++) {
-            if (i < 5) {
-                if (j - i >= 0 && j+i<=8) {
-                    bricks[i][j].SetType('r');
-                }
-            }
-            if (i >= 5) {
-                if (j-i<0 && j+i >= 9 ) {
-                    bricks[i][j].SetType('b');
-                }
-            }
-        }
-
-    }
+    
 }
 
 void Game::BuildLevel2() {
@@ -10934,12 +10916,18 @@ void Game::UpdateModel()
         mainMusicPlaying = true;
     }
     
+
+    //move the ball and paddles
     ball1.Update(dt);
     paddle1.Update(wnd.kbd,dt);
     paddle2.Update(wnd.kbd,dt);
 
-    paddle1.IsCollidingWith(ball1);
+    lvlCtrl.Update(wnd.kbd);
+    lvlCtrl.CheckCollisionAndBounce(ball1);
+    
 
+    // check for collision between ball and paddle and bounces the ball.
+    paddle1.IsCollidingWith(ball1); 
     paddle2.IsCollidingWith(ball1);
 
 }
@@ -10949,6 +10937,7 @@ void Game::ComposeFrame()
  
     paddle1.Draw(gfx);
     paddle2.Draw(gfx);
+    lvlCtrl.Draw(gfx);
 
 
     if (ball1.IsAlive()) {

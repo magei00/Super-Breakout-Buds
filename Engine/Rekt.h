@@ -1,7 +1,7 @@
 #pragma once
 #include "Vec2.h"
 
-class Rekt
+struct Rekt
 {
 public:
     Rekt() = default;
@@ -9,7 +9,7 @@ public:
     Rekt(Vec2 pos, float width, float height);
     bool IsOverlappingWith(const Rekt other) const;
 
-private:
+
     float top;
     float bottom;
     float left;

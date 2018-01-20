@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec2.h"
 #include "Graphics.h"
+#include "Rekt.h"
 
 class Ball
 {
@@ -9,7 +10,12 @@ public:
     void Update(float dt);
     void BounceX();
     void BounceY();
+    void BounceUp();
+    void BounceDown();
+    void BounceLeft();
+    void BounceRight();
     Vec2 GetPos();
+    Rekt GetRekt();
     float GetWidth();
     float GetHeight();
     void SetVel(Vec2 vel_in);
