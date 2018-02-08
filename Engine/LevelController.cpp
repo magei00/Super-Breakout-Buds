@@ -90,7 +90,7 @@ void LevelController::BuildLevel1()
     }
 }
 
-void LevelController::CheckCollisionAndBounce(Ball & ball)
+bool LevelController::CheckCollisionAndBounce(Ball & ball)
 {
     for (int i = 0; i < width; i++)
     {
@@ -108,6 +108,7 @@ void LevelController::CheckCollisionAndBounce(Ball & ball)
                 if ( overlapTop <= overlapLeft && overlapTop <= overlapRight)
                 {
                     ball.BounceUp();
+
                 }
                 else if (overlapBottom <= overlapLeft && overlapBottom <= overlapRight)
                 {
@@ -123,9 +124,11 @@ void LevelController::CheckCollisionAndBounce(Ball & ball)
                 }
 
                 bricks[i][j].Destroy();
+                return true;
             }
         }
     }
+    return false;
 }
 
 void LevelController::Draw(Graphics & gfx)

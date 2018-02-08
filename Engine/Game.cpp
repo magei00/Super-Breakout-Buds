@@ -10923,7 +10923,9 @@ void Game::UpdateModel()
     paddle2.Update(wnd.kbd,dt);
 
     lvlCtrl.Update(wnd.kbd);
-    lvlCtrl.CheckCollisionAndBounce(ball1);
+    if (lvlCtrl.CheckCollisionAndBounce(ball1)) {
+        //brickHit.Play();
+    }
     
 
     // check for collision between ball and paddle and bounces the ball.

@@ -11,7 +11,7 @@ public:
     void Update(Keyboard& kbd);
     void BuildLevel(int levelNumber);
     void BuildLevel1();
-    void CheckCollisionAndBounce(Ball& ball);
+    bool CheckCollisionAndBounce(Ball& ball);
     void Draw(Graphics& gfx);
 
 private:
