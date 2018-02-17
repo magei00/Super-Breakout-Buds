@@ -47,16 +47,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-    void DrawPlayer1(int x, int y);
-    void DrawPlayer2(int x, int y);
-    void DrawBall(int x, int y);
-    void DrawBall2(int x, int y);
-    void DrawStartScreen(int x, int y);
-    void DrawWinScreen(int x, int y);
-    void Ball_collision_check();
-    void Player_collision_check();
-    void BuildLevel1();
-    void BuildLevel2();
+   
     
         
 	/********************************/
@@ -74,7 +65,7 @@ private:
     Vec2 startPosPlayer1 = Vec2(10,200);
     Vec2 startPosPlayer2 = Vec2(758, 200);
    
-    Ball ball1;
+    Ball balls[20];
     Paddle paddle1;
     Paddle paddle2;
     LevelController lvlCtrl;

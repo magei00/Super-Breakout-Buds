@@ -1,10 +1,18 @@
 #include "Ball.h"
 
-Ball::Ball(Vec2 pos_in, Vec2 vel_in, char type_in)
+/*Ball::Ball(Vec2 pos_in, Vec2 vel_in, char type_in)
 {
     pos = pos_in;
     vel = vel_in;
     type = type_in;
+}*/
+
+void Ball::Init(Vec2 pos_in, Vec2 vel_in, char type_in)
+{
+    pos = defaultPos = pos_in;
+    vel = defaultVel = vel_in;
+    type = type_in;
+    isAlive = true;
 }
 
 void Ball::Update(float dt)
@@ -12,7 +20,10 @@ void Ball::Update(float dt)
     //move
     //vel = vel.Normalize();
 
-    pos += vel*speed*dt;
+    if (!stuck && isAlive) {
+        pos += vel*speed*dt;
+    }
+    
 
     //collision with top and bottom of level
     if (pos.y < 0)
@@ -32,6 +43,12 @@ void Ball::Update(float dt)
         BounceX();
     }
 
+}
+
+void Ball::Reset()
+{
+    pos = defaultPos;
+    vel = defaultVel;
 }
 
 void Ball::BounceX()
@@ -92,6 +109,23 @@ void Ball::SetVel(Vec2 vel_in)
 bool Ball::IsAlive()
 {
     return isAlive;
+}
+
+void Ball::SetStuck(bool isStuck)
+{
+    stuck = isStuck;
+}
+
+bool Ball::IsStuck()
+{
+    return stuck;
+}
+
+void Ball::Kill()
+{
+    isAlive = false;
+    pos = Vec2(-100.0f, -100.0f);
+    vel = Vec2(0.0f, 0.0f);
 }
 
 void Ball::Draw(Graphics & gfx)

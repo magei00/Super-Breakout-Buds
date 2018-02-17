@@ -2,7 +2,7 @@
 
 Paddle::Paddle(Vec2 pos_in, int ctrlScheme_in)
 {
-    pos = pos_in;
+    pos = defaultPos = pos_in;
     ctrlScheme = ctrlScheme_in;
 
     for (int i = 0; i < nBounceAngles; i++)
@@ -46,8 +46,15 @@ void Paddle::Update(Keyboard & kbd, float dt)
     }
 }
 
+void Paddle::Reset()
+{
+    pos = defaultPos;
+}
+
 bool Paddle::IsCollidingWith(Ball& ball)
 {
+    
+
     Rekt ballBox(ball.GetPos(), ball.GetWidth(), ball.GetHeight());
     Rekt paddleBox(pos, width, height);
     
@@ -77,6 +84,13 @@ void Paddle::BounceBall(Ball & ball)
 
             return;
         }
+    }
+}
+
+void Paddle::HandleSticky(Ball & ball)
+{
+    if (stickyCharges > 0) {
+
     }
 }
 

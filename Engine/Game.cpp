@@ -32,13 +32,13 @@ Game::Game(MainWindow& wnd)
     gameOver(L"game_over.wav"),
     mainTheme(L"main_theme.wav", 0.0f, 119.0f),
     paddleHit({ L"paddle_hit.wav" }),
-    ball1(Vec2(50.0f, 50.0f), Vec2(1.0f, 1.0f), 'r'),
     paddle1(startPosPlayer1, 1),
     paddle2(startPosPlayer2, 2),
     lvlCtrl()
 
 {
-
+    balls[0].Init(Vec2(50.0f, 50.0f), Vec2(1.0f, -0.3f), 'r');
+    balls[1].Init(Vec2(700.0f, 50.0f), Vec2(-1.0f, 0.3f), 'b');
     Vec2 test(5.0f, 0.0f);
     Vec2 test2 = test.RotateDeg(90.0f);
 
@@ -50,12 +50,6 @@ void Game::Go()
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
-}
-
-
-void Game::DrawWinScreen(int x, int y) {
-    
-
 }
 
 
@@ -72,23 +66,42 @@ void Game::UpdateModel()
     if (lvlCtrl.IsBetweenLevels())
     {
         lvlCtrl.Update(wnd.kbd);
+        //reset paddle and ball position
+        paddle1.Reset();
+        paddle2.Reset();
+        for (int i = 0; i < (sizeof(balls) / sizeof(*balls)); i++)
+        {
+            if (i == 0 || i == 1) {
+                balls[i].Reset();              
+            }
+            else 
+            {
+                balls[i].Kill();
+            }
+        }
+
     }
     else 
     {
         //move the ball and paddles
-        ball1.Update(dt);
+        for (Ball& b : balls) 
+        {
+            b.Update(dt);
+
+            if (lvlCtrl.CheckCollisionAndBounce(b)) {
+                brickHit.Play(rng);
+            }
+
+            // check for collision between ball and paddle and bounces the ball.
+            paddle1.IsCollidingWith(b);
+            paddle2.IsCollidingWith(b);
+
+        }
         paddle1.Update(wnd.kbd, dt);
         paddle2.Update(wnd.kbd, dt);
 
         lvlCtrl.Update(wnd.kbd);
-        if (lvlCtrl.CheckCollisionAndBounce(ball1)) {
-            brickHit.Play(rng);
-        }
-
-
-        // check for collision between ball and paddle and bounces the ball.
-        paddle1.IsCollidingWith(ball1);
-        paddle2.IsCollidingWith(ball1);
+        
 
     }
     
@@ -106,9 +119,14 @@ void Game::ComposeFrame()
         paddle2.Draw(gfx);
         lvlCtrl.Draw(gfx);
 
-        if (ball1.IsAlive()) {
-            ball1.Draw(gfx);
+
+        for (Ball& b : balls)
+        {
+            if (b.IsAlive()) {
+                b.Draw(gfx);
+            }
         }
+        
     }
    
 
