@@ -160,7 +160,12 @@ bool LevelController::CheckCollisionAndBounce(Ball & ball)
                     ball.BounceRight();
                 }
 
-                bricks[i][j].Destroy();
+                if (ball.GetType() == bricks[i][j].GetType() || bricks[i][j].GetType()=='g')
+                {
+                    bricks[i][j].Destroy();
+                }
+                
+
                 return true;
             }
         }
@@ -179,6 +184,17 @@ void LevelController::KillAllCheat(Keyboard & kbd)
                 bricks[i][j].Destroy();
 
             }
+        }
+    }
+}
+
+void LevelController::ReviveBricks()
+{
+    for (int i = 0; i < width; i++)
+    {
+        for (int j = 0; j < height; j++)
+        {
+            bricks[i][j].Revive();
         }
     }
 }

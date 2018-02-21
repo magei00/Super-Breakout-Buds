@@ -62,6 +62,16 @@ bool Paddle::IsCollidingWith(Ball& ball)
     {
         BounceBall(ball);
 
+        if (ctrlScheme == 1) 
+        {
+            ball.ChangeType('r');
+        }
+        else if (ctrlScheme == 2)
+        {
+            ball.ChangeType('b');
+        }
+        
+
         return true;
     }
     return false;

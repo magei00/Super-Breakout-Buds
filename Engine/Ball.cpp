@@ -11,7 +11,7 @@ void Ball::Init(Vec2 pos_in, Vec2 vel_in, char type_in)
 {
     pos = defaultPos = pos_in;
     vel = defaultVel = vel_in;
-    type = type_in;
+    type =defaultType = type_in;
     isAlive = true;
 }
 
@@ -38,7 +38,7 @@ void Ball::Update(float dt)
     }
     if (pos.x >= 800-width || pos.x < 0)//check if past paddles and outside level
     {
-        //isAlive = false;
+        isAlive = false;
         pos.x = 0;
         BounceX();
     }
@@ -47,8 +47,10 @@ void Ball::Update(float dt)
 
 void Ball::Reset()
 {
+    isAlive = true;
     pos = defaultPos;
     vel = defaultVel;
+    type = defaultType;
 }
 
 void Ball::BounceX()
@@ -101,6 +103,11 @@ float Ball::GetHeight()
     return height;
 }
 
+char Ball::GetType()
+{
+    return type;
+}
+
 void Ball::SetVel(Vec2 vel_in)
 {
     vel = vel_in;
@@ -109,6 +116,11 @@ void Ball::SetVel(Vec2 vel_in)
 bool Ball::IsAlive()
 {
     return isAlive;
+}
+
+void Ball::ChangeType(char t)
+{
+    type = t;
 }
 
 void Ball::SetStuck(bool isStuck)

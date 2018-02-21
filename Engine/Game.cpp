@@ -37,8 +37,8 @@ Game::Game(MainWindow& wnd)
     lvlCtrl()
 
 {
-    balls[0].Init(Vec2(50.0f, 50.0f), Vec2(1.0f, -0.3f), 'r');
-    balls[1].Init(Vec2(700.0f, 50.0f), Vec2(-1.0f, 0.3f), 'b');
+    balls[0].Init(Vec2(50.0f, 300.0f), Vec2(1.0f, -0.3f), 'r');
+    balls[1].Init(Vec2(700.0f, 240.0f), Vec2(-1.0f, 0.3f), 'b');
     Vec2 test(5.0f, 0.0f);
     Vec2 test2 = test.RotateDeg(90.0f);
 
@@ -72,7 +72,7 @@ void Game::UpdateModel()
         for (int i = 0; i < (sizeof(balls) / sizeof(*balls)); i++)
         {
             if (i == 0 || i == 1) {
-                balls[i].Reset();              
+                balls[i].Reset();
             }
             else 
             {
@@ -81,6 +81,13 @@ void Game::UpdateModel()
         }
 
     }
+    else if (lostLevel)
+    {
+        if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
+            lostLevel = false;
+        }
+    }
+
     else 
     {
         //move the ball and paddles
@@ -103,15 +110,67 @@ void Game::UpdateModel()
         lvlCtrl.Update(wnd.kbd);
         
 
+        if (!balls[0].IsAlive()) //Respawn main balls
+        {
+            ball1RespawnTimer += dt;
+        }
+        if (!balls[1].IsAlive())
+        {
+            ball2RespawnTimer += dt;
+        }
+
+        if (ball1RespawnTimer > ballRespawnTime) 
+        {
+            balls[0].Reset();
+            ball1RespawnTimer = 0.0f;
+        }
+        if (ball2RespawnTimer > ballRespawnTime)
+        {
+            balls[1].Reset();
+            ball2RespawnTimer = 0.0f; 
+        }
+
+        lostLevel = true;
+        //check for level loss
+        for (Ball& b : balls)
+        {
+            if (b.IsAlive())
+            {
+                lostLevel = false;
+            }
+        }
+
+
+        if (wnd.kbd.KeyIsPressed(VK_SPACE))
+        {
+            //reset paddle and ball position
+            paddle1.Reset();
+            paddle2.Reset();
+            for (int i = 0; i < (sizeof(balls) / sizeof(*balls)); i++)
+            {
+                if (i == 0 || i == 1) {
+                    balls[i].Reset();
+                }
+                else
+                {
+                    balls[i].Kill();
+                }
+            }
+            lvlCtrl.ReviveBricks();
+        }
     }
     
 }
 
 void Game::ComposeFrame()
 {
-    if (lvlCtrl.IsBetweenLevels())
+    if (lvlCtrl.IsBetweenLevels() )
     {
         lvlCtrl.Draw(gfx);
+    }
+    else if (lostLevel)
+    {
+        
     }
     else
     {

@@ -14,6 +14,7 @@ public:
     void BuildLevel2();
     bool CheckCollisionAndBounce(Ball& ball);
     void KillAllCheat(Keyboard& kbd);
+    void ReviveBricks();
     void Draw(Graphics& gfx);
     bool IsBetweenLevels();
     void DrawStartScreen(Graphics& gfx);

@@ -75,6 +75,7 @@ private:
     bool level2_built = false;
     bool level1_clear = false;
     bool level2_clear = false;
+    bool lostLevel = false;
     bool even = true;
     bool game_start = false;
     bool win_screen = false;
@@ -85,6 +86,10 @@ private:
     bool gameOverOnce = true;
     bool doOnce1 = true;
     bool doOnce2 = true;
+
+    float ballRespawnTime = 10.0f;
+    float ball1RespawnTimer = 0.0f;
+    float ball2RespawnTimer = 0.0f;
 
     //Brick bricks[12][9];
 

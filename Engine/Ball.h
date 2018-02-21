@@ -20,8 +20,10 @@ public:
     Rekt GetRekt();
     float GetWidth();
     float GetHeight();
+    char GetType();
     void SetVel(Vec2 vel_in);
     bool IsAlive();
+    void ChangeType(char t);
     void SetStuck(bool isStuck);
     bool IsStuck();
     void Kill();
@@ -35,6 +37,7 @@ private:
     bool stuck=false;
     float speed=500;
     char type;
+    char defaultType;
     static constexpr float width = 24.0f;
     static constexpr float height = 24.0f;
     bool isAlive = false;
